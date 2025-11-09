@@ -19,9 +19,7 @@ export function validateUrl(url: string): boolean {
  */
 export function validateThresholds(thresholds: string[]): boolean {
   const validPattern = [/^p\(\d+\)<\d+$/, /^rate<[\d.]+$/, /^count[<>=]\d+$/];
-  return thresholds.every((threshold) =>
-    validPattern.some((pattern) => pattern.test(threshold)),
-  );
+  return thresholds.every((threshold) => validPattern.some((pattern) => pattern.test(threshold)));
 }
 
 /**
@@ -30,10 +28,7 @@ export function validateThresholds(thresholds: string[]): boolean {
  * @param percentile
  * @returns the calculated percentile value
  */
-export function calculatePercentile(
-  values: number[],
-  percentile: number,
-): number {
+export function calculatePercentile(values: number[], percentile: number): number {
   // Sort the array and find the percentile value - Ascending order
   const sortedValues = [...values].sort((a, b) => a - b);
   // Find the index corresponding to the percentile

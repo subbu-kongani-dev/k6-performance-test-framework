@@ -4,7 +4,7 @@ import { Logger } from "../utils/logger";
 /**
  * Helper class to build HTTP requests for performance testing.
  * Provides a fluent interface for constructing HTTP requests with headers, query parameters, and payloads.
- * 
+ *
  * @module request-builder
  * @example
  * ```typescript
@@ -123,7 +123,7 @@ export class RequestBuilder {
     // Ensure endpoint starts with /
     const normalizedEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
     const url = `${this.baseUrl}${normalizedEndpoint}`;
-    
+
     // Check if queryParams is undefined, null, or empty object
     if (!queryParams || Object.keys(queryParams).length === 0) {
       return url;
@@ -139,12 +139,9 @@ export class RequestBuilder {
     }
 
     const queryString = validParams
-      .map(
-        ([key, value]) =>
-          `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-      )
+      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
       .join("&");
-    
+
     return `${url}?${queryString}`;
   }
 

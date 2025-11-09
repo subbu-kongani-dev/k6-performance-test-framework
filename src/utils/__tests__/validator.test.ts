@@ -1,8 +1,4 @@
-import {
-  validateUrl,
-  validateThresholds,
-  calculatePercentile,
-} from "../validator";
+import { validateUrl, validateThresholds, calculatePercentile } from "../validator";
 
 describe("validators", () => {
   it("should validate correct URLs", () => {

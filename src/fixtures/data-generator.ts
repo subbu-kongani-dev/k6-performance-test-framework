@@ -77,9 +77,7 @@ export function randomElement<T>(array: T[]): T {
  * @returns Random date
  */
 export function randomDate(start: Date, end: Date): Date {
-  return new Date(
-    start.getTime() + Math.random() * (end.getTime() - start.getTime())
-  );
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
 
 /**
@@ -87,9 +85,7 @@ export function randomDate(start: Date, end: Date): Date {
  * @param format - Phone number format (default: US format)
  * @returns Random phone number
  */
-export function randomPhoneNumber(
-  format: string = "###-###-####"
-): string {
+export function randomPhoneNumber(format: string = "###-###-####"): string {
   return format.replace(/#/g, () => randomInt(0, 9).toString());
 }
 
@@ -102,28 +98,11 @@ export function generateUser() {
     id: randomInt(1, 10000),
     username: randomString(8, "abcdefghijklmnopqrstuvwxyz"),
     email: randomEmail(),
-    firstName: randomElement([
-      "John",
-      "Jane",
-      "Bob",
-      "Alice",
-      "Charlie",
-      "Diana",
-    ]),
-    lastName: randomElement([
-      "Smith",
-      "Johnson",
-      "Williams",
-      "Brown",
-      "Jones",
-      "Garcia",
-    ]),
+    firstName: randomElement(["John", "Jane", "Bob", "Alice", "Charlie", "Diana"]),
+    lastName: randomElement(["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia"]),
     age: randomInt(18, 80),
     active: randomBoolean(),
-    createdAt: randomDate(
-      new Date(2020, 0, 1),
-      new Date()
-    ).toISOString(),
+    createdAt: randomDate(new Date(2020, 0, 1), new Date()).toISOString(),
   };
 }
 
@@ -142,10 +121,7 @@ export function generatePost() {
       randomElement(["api", "rest", "graphql", "websocket"]),
     ],
     published: randomBoolean(),
-    createdAt: randomDate(
-      new Date(2023, 0, 1),
-      new Date()
-    ).toISOString(),
+    createdAt: randomDate(new Date(2023, 0, 1), new Date()).toISOString(),
   };
 }
 
@@ -169,9 +145,6 @@ export function generateComment() {
  * @param count - Number of items to generate
  * @returns Array of generated items
  */
-export function generateArray<T>(
-  generator: () => T,
-  count: number
-): T[] {
+export function generateArray<T>(generator: () => T, count: number): T[] {
   return Array.from({ length: count }, generator);
 }

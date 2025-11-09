@@ -1,20 +1,20 @@
 /**
  * Smoke Test Suite
- * 
+ *
  * Purpose: Quick validation to ensure the system is functional and accessible
  * Duration: 30 seconds with 10 concurrent virtual users
- * 
+ *
  * This test performs basic health checks on the API endpoints to verify:
  * - System availability
  * - Basic endpoint functionality
  * - Acceptable response times under minimal load
- * 
+ *
  * Success Criteria:
  * - All requests should return status 200
  * - 95% of requests complete within 500ms
  * - 99% of requests complete within 1000ms
  * - Less than 1% request failure rate
- * 
+ *
  * @module smoke-test
  */
 
@@ -59,17 +59,15 @@ export function setup() {
 export default function () {
   // Test 1: GET /users endpoint
   logger.step("Testing GET /users endpoint");
-  
+
   const usersUrl = requestBuilder.buildUrl("/users");
   const usersResponse = http.get(usersUrl);
-  
+
   check(usersResponse, {
     "GET /users: status is 200": (r) => r.status === 200,
     "GET /users: response time < 200ms": (r) => r.timings.duration < 200,
-    "GET /users: status is successful": (r) =>
-      ResponseValidator.isSuccessful(r.status),
-    "GET /users: has response body": (r) =>
-      ResponseValidator.hasResponseBody(r.body),
+    "GET /users: status is successful": (r) => ResponseValidator.isSuccessful(r.status),
+    "GET /users: has response body": (r) => ResponseValidator.hasResponseBody(r.body),
   });
 
   logger.logRequest("GET", usersUrl, usersResponse.status, usersResponse.timings.duration);
@@ -79,15 +77,14 @@ export default function () {
 
   // Test 2: GET /posts endpoint
   logger.step("Testing GET /posts endpoint");
-  
+
   const postsUrl = requestBuilder.buildUrl("/posts");
   const postsResponse = http.get(postsUrl);
-  
+
   check(postsResponse, {
     "GET /posts: status is 200": (r) => r.status === 200,
     "GET /posts: response time < 200ms": (r) => r.timings.duration < 200,
-    "GET /posts: has response body": (r) =>
-      ResponseValidator.hasResponseBody(r.body),
+    "GET /posts: has response body": (r) => ResponseValidator.hasResponseBody(r.body),
   });
 
   logger.logRequest("GET", postsUrl, postsResponse.status, postsResponse.timings.duration);
@@ -114,10 +111,9 @@ export function teardown(data: any) {
  */
 export function handleSummary(data: any) {
   logger.info("Generating test summary");
-  
+
   return {
     "results/smoke-summary.json": JSON.stringify(data, null, 2),
     stdout: JSON.stringify(data, null, 2),
   };
 }
-

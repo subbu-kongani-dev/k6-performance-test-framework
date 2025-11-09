@@ -69,9 +69,9 @@ export class Logger {
     }
 
     const logMessage = `[${entry.timestamp}] [${entry.level}] [${this.context}] ${entry.message}`;
-    
+
     console.log(logMessage);
-    
+
     if (entry.context && Object.keys(entry.context).length > 0) {
       console.log("Context:", JSON.stringify(entry.context, null, 2));
     }
@@ -149,12 +149,7 @@ export class Logger {
    * @param statusCode - Response status code
    * @param duration - Request duration in milliseconds
    */
-  public logRequest(
-    method: string,
-    url: string,
-    statusCode: number,
-    duration: number
-  ): void {
+  public logRequest(method: string, url: string, statusCode: number, duration: number): void {
     this.info(`${method} ${url} - Status: ${statusCode} - Duration: ${duration.toFixed(2)}ms`);
   }
 

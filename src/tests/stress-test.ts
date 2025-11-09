@@ -1,22 +1,22 @@
 /**
  * Stress Test Suite
- * 
+ *
  * Purpose: Identify system breaking points and stability under extreme load
  * Pattern: Progressive load increase 0 → 50 → 100 → 0
  * Duration: 16 minutes total with gradual ramp-up and sustained high load
- * 
+ *
  * This test pushes the system beyond normal operating conditions to:
  * - Identify maximum capacity
  * - Detect resource exhaustion
  * - Observe degradation patterns
  * - Validate error handling under stress
- * 
+ *
  * Success Criteria (relaxed for stress conditions):
  * - 95% of requests complete within 1000ms
  * - 99% of requests complete within 2000ms
  * - Less than 5% request failure rate
  * - System recovery after load reduction
- * 
+ *
  * @module stress-test
  */
 
@@ -64,7 +64,7 @@ export function setup() {
  */
 export default function () {
   logger.step("Executing stress test iteration");
-  
+
   // Test endpoint under stress
   const url = requestBuilder.buildUrl("/posts");
   const response = http.get(url);
@@ -72,12 +72,10 @@ export default function () {
   // Validate response
   const checks = check(response, {
     "Stress Test: status is 200": (r) => r.status === 200,
-    "Stress Test: status is successful": (r) =>
-      ResponseValidator.isSuccessful(r.status),
+    "Stress Test: status is successful": (r) => ResponseValidator.isSuccessful(r.status),
     "Stress Test: response time < 2000ms": (r) =>
       ResponseValidator.meetsPerformanceThresholds(r.timings.duration, 2000),
-    "Stress Test: has response body": (r) =>
-      ResponseValidator.hasResponseBody(r.body),
+    "Stress Test: has response body": (r) => ResponseValidator.hasResponseBody(r.body),
   });
 
   // Track metrics
@@ -102,8 +100,7 @@ export default function () {
 
   check(postsResponse, {
     "Stress Test (list): status is 200": (r) => r.status === 200,
-    "Stress Test (list): response time < 2000ms": (r) =>
-      r.timings.duration < 2000,
+    "Stress Test (list): response time < 2000ms": (r) => r.timings.duration < 2000,
   });
 
   if (postsResponse.status !== 200) {
@@ -132,12 +129,12 @@ export function teardown(data: any) {
  */
 export function handleSummary(data: any) {
   logger.info("Generating stress test summary");
-  
+
   // Calculate additional stress test metrics
   const metrics = data.metrics;
   const failureRate = metrics.http_req_failed?.values?.rate || 0;
   const p95Duration = metrics.http_req_duration?.values?.["p(95)"] || 0;
-  
+
   logger.info("Stress Test Results", {
     failureRate: `${(failureRate * 100).toFixed(2)}%`,
     p95ResponseTime: `${p95Duration.toFixed(2)}ms`,
@@ -148,4 +145,3 @@ export function handleSummary(data: any) {
     stdout: JSON.stringify(data, null, 2),
   };
 }
-

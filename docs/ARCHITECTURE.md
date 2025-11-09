@@ -45,14 +45,16 @@ The framework is built on the following principles:
 ### Layer Responsibilities
 
 #### 1. Presentation Layer (`src/tests/`)
+
 - **Purpose**: Test scripts that define test scenarios
-- **Components**: 
+- **Components**:
   - Smoke tests
   - Load tests
   - Stress tests
 - **Dependencies**: Service Layer, Utility Layer
 
 #### 2. Service Layer (`src/helpers/`)
+
 - **Purpose**: Encapsulates business logic and domain operations
 - **Components**:
   - RequestBuilder: HTTP request construction
@@ -60,6 +62,7 @@ The framework is built on the following principles:
 - **Dependencies**: Utility Layer, Infrastructure Layer
 
 #### 3. Utility Layer (`src/utils/`)
+
 - **Purpose**: Reusable utility functions
 - **Components**:
   - Logger: Structured logging
@@ -69,6 +72,7 @@ The framework is built on the following principles:
 - **Dependencies**: Infrastructure Layer
 
 #### 4. Data Layer (`src/fixtures/`)
+
 - **Purpose**: Test data and data generation
 - **Components**:
   - data-generator: Dynamic test data creation
@@ -76,6 +80,7 @@ The framework is built on the following principles:
 - **Dependencies**: None (pure data)
 
 #### 5. Infrastructure Layer (`src/config/`, `src/constants/`)
+
 - **Purpose**: Configuration and constants
 - **Components**:
   - Environment configuration
@@ -93,7 +98,7 @@ The framework is built on the following principles:
 class RequestBuilder {
   - baseUrl: string
   - headers: Record<string, string>
-  
+
   + setHeader(key, value): RequestBuilder
   + setHeaders(headers): RequestBuilder
   + setBearerToken(token): RequestBuilder
@@ -107,6 +112,7 @@ class RequestBuilder {
 **Design Pattern**: Builder Pattern for fluent API
 
 **Usage**:
+
 ```typescript
 const request = new RequestBuilder(baseUrl)
   .setBearerToken(token)
@@ -133,6 +139,7 @@ class ResponseValidator {
 **Design Pattern**: Static utility class
 
 **Usage**:
+
 ```typescript
 const validation = ResponseValidator.validateResponse(
   response.status,
@@ -150,7 +157,7 @@ const validation = ResponseValidator.validateResponse(
 class Logger {
   - context: string
   - logLevel: LogLevel
-  
+
   + debug(message, context?): void
   + info(message, context?): void
   + warn(message, context?): void
@@ -164,6 +171,7 @@ class Logger {
 **Design Pattern**: Logger Pattern with context
 
 **Usage**:
+
 ```typescript
 const logger = new Logger("MyTest");
 logger.info("Test started");
@@ -178,16 +186,16 @@ logger.logRequest("GET", url, 200, 150);
 enum Environment {
   DEVELOPMENT,
   STAGING,
-  PRODUCTION
+  PRODUCTION,
 }
 
 interface EnvironmentConfig {
-  name: Environment
-  baseUrl: string
-  timeout: number
-  retryAttempts: number
-  logLevel: string
-  enableMetrics: boolean
+  name: Environment;
+  baseUrl: string;
+  timeout: number;
+  retryAttempts: number;
+  logLevel: string;
+  enableMetrics: boolean;
 }
 ```
 

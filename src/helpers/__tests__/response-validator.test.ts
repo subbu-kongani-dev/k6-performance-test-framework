@@ -13,11 +13,7 @@ describe("ResponseValidator", () => {
 
   it("should validate all required fields are present", () => {
     const data = { id: 1, title: "Test", userId: 1 };
-    const result = ResponseValidator.hasRequestFields(data, [
-      "id",
-      "title",
-      "userId",
-    ]);
+    const result = ResponseValidator.hasRequestFields(data, ["id", "title", "userId"]);
     expect(result.valid).toBe(true);
     expect(result.missing).toEqual([]);
   });

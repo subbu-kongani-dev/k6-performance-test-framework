@@ -1,21 +1,21 @@
 /**
  * Load Test Suite
- * 
+ *
  * Purpose: Evaluate system performance under expected production load
  * Pattern: Ramping VUs from 0 → 20 → 50 → 0
  * Duration: 9 minutes total (2m ramp-up, 5m sustained, 2m ramp-down)
- * 
+ *
  * This test simulates realistic user behavior patterns including:
  * - Reading data (GET requests)
  * - Creating new resources (POST requests)
  * - Variable think times between actions
- * 
+ *
  * Success Criteria:
  * - 95% of requests complete within 500ms
  * - 99% of requests complete within 1000ms
  * - Less than 1% request failure rate
  * - System stability under sustained load
- * 
+ *
  * @module load-test
  */
 
@@ -61,23 +61,21 @@ export function setup() {
 export default function () {
   // Scenario 1: Retrieve list of posts (common read operation)
   logger.step("Retrieving posts list");
-  
+
   const getUrl = requestBuilder.buildUrl("/posts", {});
   const getResponse = http.get(getUrl);
 
   const getChecks = check(getResponse, {
     "GET /posts: status is 200": (r) => r.status === 200,
-    "GET /posts: status is successful": (r) =>
-      ResponseValidator.isSuccessful(r.status),
+    "GET /posts: status is successful": (r) => ResponseValidator.isSuccessful(r.status),
     "GET /posts: response time < 500ms": (r) =>
       ResponseValidator.meetsPerformanceThresholds(r.timings.duration, 500),
-    "GET /posts: has response body": (r) =>
-      ResponseValidator.hasResponseBody(r.body),
+    "GET /posts: has response body": (r) => ResponseValidator.hasResponseBody(r.body),
   });
 
   // Track custom metrics
   customMetrics.durationInSeconds.add(getResponse.timings.duration / 1000);
-  
+
   if (!getChecks) {
     customMetrics.errorRate.add(1);
     logger.error("GET request failed", {
@@ -89,9 +87,12 @@ export default function () {
   logger.logRequest("GET", getUrl, getResponse.status, getResponse.timings.duration);
 
   // Track data metrics
-  const responseBodyLength = typeof getResponse.body === "string" 
-    ? getResponse.body.length 
-    : getResponse.body ? getResponse.body.byteLength : 0;
+  const responseBodyLength =
+    typeof getResponse.body === "string"
+      ? getResponse.body.length
+      : getResponse.body
+        ? getResponse.body.byteLength
+        : 0;
   customMetrics.dataReceived.add(responseBodyLength);
 
   // Simulate user think time
@@ -99,7 +100,7 @@ export default function () {
 
   // Scenario 2: Create a new post (write operation)
   logger.step("Creating new post");
-  
+
   const postUrl = requestBuilder.buildUrl("/posts", {});
   const postData = generatePost();
   const payload = requestBuilder.buildPayload({
@@ -116,17 +117,19 @@ export default function () {
     "POST /posts: status is 201": (r) => r.status === 201,
     "POST /posts: response time < 1000ms": (r) =>
       ResponseValidator.meetsPerformanceThresholds(r.timings.duration, 1000),
-    "POST /posts: has response body": (r) =>
-      ResponseValidator.hasResponseBody(r.body),
+    "POST /posts: has response body": (r) => ResponseValidator.hasResponseBody(r.body),
   });
 
   // Track metrics
   customMetrics.durationInSeconds.add(postResponse.timings.duration / 1000);
   customMetrics.dataSent.add(payload.length);
-  
-  const postResponseBodyLength = typeof postResponse.body === "string"
-    ? postResponse.body.length
-    : postResponse.body ? postResponse.body.byteLength : 0;
+
+  const postResponseBodyLength =
+    typeof postResponse.body === "string"
+      ? postResponse.body.length
+      : postResponse.body
+        ? postResponse.body.byteLength
+        : 0;
   customMetrics.dataReceived.add(postResponseBodyLength);
 
   if (postResponse.status !== 201) {
@@ -143,10 +146,8 @@ export default function () {
   // Scenario 3: Retrieve specific post (read by ID)
   if (postChecks && postResponse.body) {
     logger.step("Retrieving created post");
-    
-    const bodyString = typeof postResponse.body === "string" 
-      ? postResponse.body 
-      : "";
+
+    const bodyString = typeof postResponse.body === "string" ? postResponse.body : "";
     const responseBody = ResponseValidator.parseJsonSafely(bodyString);
     if (responseBody && responseBody.id) {
       const specificPostUrl = requestBuilder.buildUrl(`/posts/${responseBody.id}`);
@@ -161,7 +162,12 @@ export default function () {
         },
       });
 
-      logger.logRequest("GET", specificPostUrl, specificPostResponse.status, specificPostResponse.timings.duration);
+      logger.logRequest(
+        "GET",
+        specificPostUrl,
+        specificPostResponse.status,
+        specificPostResponse.timings.duration
+      );
     }
   }
 
@@ -187,10 +193,9 @@ export function teardown(data: any) {
  */
 export function handleSummary(data: any) {
   logger.info("Generating test summary");
-  
+
   return {
     "results/load-summary.json": JSON.stringify(data, null, 2),
     stdout: JSON.stringify(data, null, 2),
   };
 }
-

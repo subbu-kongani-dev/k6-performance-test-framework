@@ -38,7 +38,7 @@ describe("Logger", () => {
 
     it("should only log messages at or above current log level", () => {
       logger.setLogLevel(LogLevel.WARN);
-      
+
       logger.debug("Debug message");
       logger.info("Info message");
       logger.warn("Warn message");

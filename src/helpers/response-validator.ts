@@ -13,7 +13,7 @@ export interface ValidationResult {
 /**
  * ResponseValidator class provides comprehensive static methods to validate HTTP responses.
  * Includes methods to check status codes, validate response structure, and ensure performance thresholds.
- * 
+ *
  * @module response-validator
  * @example
  * ```typescript
@@ -67,17 +67,14 @@ export class ResponseValidator {
    * @param fields - Array of required field names
    * @returns Object with validation status and array of missing fields
    */
-  static hasRequiredFields(
-    response: any,
-    fields: string[]
-  ): { valid: boolean; missing: string[] } {
+  static hasRequiredFields(response: any, fields: string[]): { valid: boolean; missing: string[] } {
     if (typeof response !== "object" || response === null) {
       this.logger.warn(ERROR_MESSAGES.INVALID_JSON);
       return { valid: false, missing: fields };
     }
 
     const missingFields = fields.filter((field) => !(field in response));
-    
+
     if (missingFields.length > 0) {
       this.logger.warn(ERROR_MESSAGES.MISSING_REQUIRED_FIELD, { missingFields });
     }
@@ -89,10 +86,7 @@ export class ResponseValidator {
    * Backward compatibility alias for hasRequiredFields
    * @deprecated Use hasRequiredFields instead
    */
-  static hasRequestFields(
-    response: any,
-    fields: string[]
-  ): { valid: boolean; missing: string[] } {
+  static hasRequestFields(response: any, fields: string[]): { valid: boolean; missing: string[] } {
     return this.hasRequiredFields(response, fields);
   }
 
@@ -102,10 +96,7 @@ export class ResponseValidator {
    * @param fields - Array of required field names
    * @returns Detailed validation result
    */
-  static validateRequiredFields(
-    response: any,
-    fields: string[]
-  ): ValidationResult {
+  static validateRequiredFields(response: any, fields: string[]): ValidationResult {
     if (typeof response !== "object" || response === null) {
       return {
         valid: false,
@@ -129,7 +120,9 @@ export class ResponseValidator {
 
     return {
       valid: isValid,
-      message: isValid ? "All required fields present and valid" : ERROR_MESSAGES.MISSING_REQUIRED_FIELD,
+      message: isValid
+        ? "All required fields present and valid"
+        : ERROR_MESSAGES.MISSING_REQUIRED_FIELD,
       details: { missingFields, nullFields },
     };
   }
@@ -182,10 +175,7 @@ export class ResponseValidator {
    * @param threshold - The maximum acceptable response time in milliseconds
    * @returns true if response time is within threshold, false otherwise
    */
-  static meetsPerformanceThresholds(
-    responseTime: number,
-    threshold: number
-  ): boolean {
+  static meetsPerformanceThresholds(responseTime: number, threshold: number): boolean {
     if (responseTime < 0 || threshold < 0) {
       this.logger.error("Invalid response time or threshold values", {
         responseTime,
@@ -195,7 +185,7 @@ export class ResponseValidator {
     }
 
     const meetsThreshold = responseTime <= threshold;
-    
+
     if (!meetsThreshold) {
       this.logger.warn(ERROR_MESSAGES.THRESHOLD_EXCEEDED, {
         responseTime,
@@ -235,19 +225,13 @@ export class ResponseValidator {
    * @param expectedType - The expected type (e.g., 'string', 'number', 'object')
    * @returns true if field exists and matches expected type
    */
-  static hasExpectedType(
-    response: any,
-    field: string,
-    expectedType: string
-  ): boolean {
+  static hasExpectedType(response: any, field: string, expectedType: string): boolean {
     if (!(field in response)) {
       this.logger.warn(`Field '${field}' not found in response`);
       return false;
     }
 
-    const actualType = Array.isArray(response[field])
-      ? "array"
-      : typeof response[field];
+    const actualType = Array.isArray(response[field]) ? "array" : typeof response[field];
 
     if (actualType !== expectedType) {
       this.logger.warn(
@@ -265,10 +249,7 @@ export class ResponseValidator {
    * @param schema - Schema object with field names and expected types
    * @returns Detailed validation result
    */
-  static validateSchema(
-    response: any,
-    schema: Record<string, string>
-  ): ValidationResult {
+  static validateSchema(response: any, schema: Record<string, string>): ValidationResult {
     const errors: string[] = [];
 
     Object.entries(schema).forEach(([field, expectedType]) => {
@@ -329,9 +310,7 @@ export class ResponseValidator {
     if (requiredFields && requiredFields.length > 0) {
       const fieldValidation = this.hasRequiredFields(body, requiredFields);
       if (!fieldValidation.valid) {
-        errors.push(
-          `Missing required fields: ${fieldValidation.missing.join(", ")}`
-        );
+        errors.push(`Missing required fields: ${fieldValidation.missing.join(", ")}`);
       }
     }
 
