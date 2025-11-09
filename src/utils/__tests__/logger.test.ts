@@ -51,11 +51,13 @@ describe("Logger", () => {
 
   describe("Logging Methods", () => {
     it("should log debug messages with context", () => {
+      logger.setLogLevel(LogLevel.DEBUG); // Set log level to DEBUG to see debug messages
       logger.debug("Debug test", { key: "value" });
       expect(consoleLogSpy).toHaveBeenCalled();
       const logCall = consoleLogSpy.mock.calls[0][0];
       expect(logCall).toContain("[DEBUG]");
       expect(logCall).toContain("Debug test");
+      logger.setLogLevel(LogLevel.INFO); // Reset to default
     });
 
     it("should log info messages", () => {

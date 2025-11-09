@@ -25,13 +25,13 @@ export class RequestBuilder {
    * @throws {Error} If the base URL is invalid
    */
   constructor(baseUrl: string) {
-    this.validateUrl(baseUrl);
-    this.baseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
+    this.logger = new Logger("RequestBuilder");
     this.headers = {
       "Content-Type": ContentType.JSON,
       Accept: ContentType.JSON,
     };
-    this.logger = new Logger("RequestBuilder");
+    this.validateUrl(baseUrl);
+    this.baseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
   }
 
   /**
@@ -40,9 +40,9 @@ export class RequestBuilder {
    * @throws {Error} If the URL is invalid
    */
   private validateUrl(url: string): void {
-    try {
-      new URL(url);
-    } catch (error) {
+    // Simple URL validation that works in k6 environment
+    const urlPattern = /^https?:\/\/.+/i;
+    if (!urlPattern.test(url)) {
       this.logger.error(ERROR_MESSAGES.INVALID_URL, { url });
       throw new Error(`${ERROR_MESSAGES.INVALID_URL}: ${url}`);
     }
