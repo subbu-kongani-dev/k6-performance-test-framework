@@ -129,6 +129,9 @@ jobs:
         with:
           k6-version: ${{ env.K6_VERSION }}
 
+      - name: Create results directory
+        run: mkdir -p results
+
       - name: Run smoke test
         run: k6 run dist/smoke-test.js
         env:
@@ -167,6 +170,9 @@ jobs:
         with:
           k6-version: ${{ env.K6_VERSION }}
 
+      - name: Create results directory
+        run: mkdir -p results
+
       - name: Run load test
         run: k6 run dist/load-test.js
         env:
@@ -203,6 +209,9 @@ jobs:
         uses: grafana/setup-k6-action@v1
         with:
           k6-version: ${{ env.K6_VERSION }}
+
+      - name: Create results directory
+        run: mkdir -p results
 
       - name: Run stress test
         run: k6 run dist/stress-test.js
