@@ -162,7 +162,12 @@ describe("ResponseValidator", () => {
 
   describe("Complete Response Validation", () => {
     it("should validate complete successful response", () => {
-      const result = ResponseValidator.validateResponse(200, { id: 1, name: "John" }, ["id", "name"], 200);
+      const result = ResponseValidator.validateResponse(
+        200,
+        { id: 1, name: "John" },
+        ["id", "name"],
+        200
+      );
       expect(result.valid).toBe(true);
     });
 

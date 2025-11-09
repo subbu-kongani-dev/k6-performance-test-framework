@@ -45,7 +45,12 @@ describe("Environment Configuration", () => {
 
   describe("Environment Config Properties", () => {
     it("should have retry configurations for all environments", () => {
-      const environments = [Environment.LOCAL, Environment.DEVELOPMENT, Environment.STAGING, Environment.PRODUCTION];
+      const environments = [
+        Environment.LOCAL,
+        Environment.DEVELOPMENT,
+        Environment.STAGING,
+        Environment.PRODUCTION,
+      ];
 
       environments.forEach((env) => {
         const config = getEnvironmentConfig(env);
@@ -55,7 +60,12 @@ describe("Environment Configuration", () => {
     });
 
     it("should have timeout for all environments", () => {
-      const environments = [Environment.LOCAL, Environment.DEVELOPMENT, Environment.STAGING, Environment.PRODUCTION];
+      const environments = [
+        Environment.LOCAL,
+        Environment.DEVELOPMENT,
+        Environment.STAGING,
+        Environment.PRODUCTION,
+      ];
 
       environments.forEach((env) => {
         const config = getEnvironmentConfig(env);
