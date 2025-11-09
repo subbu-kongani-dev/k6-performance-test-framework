@@ -1,8 +1,9 @@
 # 🚀 K6 Performance Test Framework
 
-[![CI/CD Status](https://github.com/yourusername/k6-performance-test-framework/workflows/K6%20Performance%20Testing%20CI/CD/badge.svg)](https://github.com/yourusername/k6-performance-test-framework/actions)
-[![codecov](https://codecov.io/gh/yourusername/k6-performance-test-framework/branch/main/graph/badge.svg)](https://codecov.io/gh/yourusername/k6-performance-test-framework)
+[![CI/CD Status](https://github.com/subbu-kongani-dev/k6-performance-test-framework/actions/workflows/k6-performance-tests.yml/badge.svg)](https://github.com/subbu-kongani-dev/k6-performance-test-framework/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3.0-blue.svg)](https://www.typescriptlang.org/)
+[![k6](https://img.shields.io/badge/k6-0.48.0-7d64ff.svg)](https://k6.io/)
 
 A comprehensive, production-ready performance testing framework built with [k6](https://k6.io/), TypeScript, and Jest. This framework provides a structured approach to performance testing with built-in best practices, reusable utilities, and comprehensive CI/CD integration.
 
@@ -108,7 +109,7 @@ docker pull grafana/k6
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/k6-performance-test-framework.git
+   git clone https://github.com/subbu-kongani-dev/k6-performance-test-framework.git
    cd k6-performance-test-framework
    ```
 
@@ -621,12 +622,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📬 Contact & Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/k6-performance-test-framework/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/k6-performance-test-framework/discussions)
-- **Documentation**: [Wiki](https://github.com/yourusername/k6-performance-test-framework/wiki)
+- **Issues**: [GitHub Issues](https://github.com/subbu-kongani-dev/k6-performance-test-framework/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/subbu-kongani-dev/k6-performance-test-framework/discussions)
+- **Pull Requests**: [Contributions Welcome](https://github.com/subbu-kongani-dev/k6-performance-test-framework/pulls)
 
 ---
 
-**Made with ❤️ by the Performance Engineering Team**
+**Made with ❤️ for Performance Testing**
 
 ⭐ If you find this framework helpful, please star the repository!
