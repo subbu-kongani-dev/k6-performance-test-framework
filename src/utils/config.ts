@@ -9,9 +9,9 @@ export const config = {
     // Define performance thresholds
     //  Example: 95% of requests should complete within 500ms
     //  99% of requests should complete within 1000ms
-    // Less than 1% of requests should fail
+    // Less than 5% of requests should fail (relaxed for public API)
     http_req_duration: ["p(95) < 500", "p(99) < 1000"],
-    http_req_failed: ["rate < 0.01"],
+    http_req_failed: ["rate < 0.05"], // Relaxed to 5% for public API load testing
   },
 };
 
@@ -32,27 +32,28 @@ export const scenarios = {
   // "Step 2: Load Testing",
   // Load Test Scenario
   // Simulates a moderate load on the system to observe performance
+  // Adjusted for public test API
   load: {
     executor: "ramping-vus" as const,
     startVus: 0,
     stages: [
-      { duration: "2m", target: 20 },
-      { duration: "5m", target: 50 },
+      { duration: "2m", target: 10 }, // Reduced from 20
+      { duration: "5m", target: 20 }, // Reduced from 50
       { duration: "2m", target: 0 },
     ],
   },
   // "Step 3: Stress Testing",
   // Stress Test Scenario
   // Pushes the system to its limits to identify breaking points
-  // gradually increases the load to a high number of VUs
+  // Adjusted for public test API to avoid overwhelming it
   stress: {
     executor: "ramping-vus" as const,
     startVus: 0,
     stages: [
-      { duration: "2m", target: 50 },
-      { duration: "5m", target: 50 },
-      { duration: "2m", target: 100 },
-      { duration: "5m", target: 100 },
+      { duration: "2m", target: 20 }, // Reduced from 50
+      { duration: "5m", target: 20 },
+      { duration: "2m", target: 40 }, // Reduced from 100
+      { duration: "5m", target: 40 },
       { duration: "2m", target: 0 },
     ],
   },
